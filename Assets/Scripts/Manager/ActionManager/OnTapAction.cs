@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using static BuildingManager;
 using TMPro;
 using Unity.VisualScripting;
+using System.Runtime.CompilerServices;
 
 public class OnTapAction : MonoBehaviour
 {
@@ -29,9 +30,11 @@ public class OnTapAction : MonoBehaviour
     [SerializeField] public TMP_Text levelTxt;
     [SerializeField] public TMP_Text nameTxt;
     [SerializeField] public TMP_Text costDonateTxt;
-    
 
-    
+    //[SerializeField] private GameObject workerObj;
+    [SerializeField] private Image workerImage;
+    [SerializeField] private TMP_Text workerName;
+    [SerializeField] private JsonReader jsonReader;
 
     public void MakeAction(AbstractBuilding abstractBuilding, GameObject gameObject)
     {
@@ -42,6 +45,7 @@ public class OnTapAction : MonoBehaviour
             case BuildingState.notbuild:
                 generalOnTapAction.NotBuildTab();
                 ShowCost(abstractBuilding);
+                //workerObj.SetActive(false);
                 if (builderManager.GetCurrentFreeBuilder() > 0)
                 {
                     // Build with money
@@ -92,6 +96,7 @@ public class OnTapAction : MonoBehaviour
             case BuildingState.build:
                 // TODO: building build time bu
                 generalOnTapAction.BuildTab();
+                //workerObj.SetActive(false);
                 buildMode.skipButton.onClick.RemoveAllListeners();
                 buildMode.skipButton.onClick.AddListener(delegate
                 {
@@ -102,6 +107,12 @@ public class OnTapAction : MonoBehaviour
                 generalOnTapAction.WorkTab();
                 levelTxt.text = abstractBuilding.level.ToString();
                 ShowCost(abstractBuilding);
+                //workerObj.SetActive(true);
+                if(abstractBuilding.managerID != 0)
+                {
+                    workerName.text = jsonReader.emplyees.worker[abstractBuilding.managerID].name;
+                    workerImage.sprite = jsonReader.emplyees.worker[abstractBuilding.managerID].employeePhoto;
+                }
                 GameManager.instance.onBuildingCondition?.Invoke(abstractBuilding);
                 if (money.GetMoney() >= abstractBuilding.updateCost[abstractBuilding.level].moneyCost)
                 {
@@ -146,7 +157,6 @@ public class OnTapAction : MonoBehaviour
 
     public void ShowCost(AbstractBuilding abstractBuilding)
     {
-        Debug.Log(abstractBuilding.name);
         costTxt.gameObject.SetActive(true);
         costDonateTxt.gameObject.SetActive(true);
         costTxt.text = abstractBuilding.updateCost[abstractBuilding.level].moneyCost.ToString();

@@ -43,19 +43,16 @@ public class MainAlgorithm : MonoBehaviour
         {
             blockTwoElectircity = (int)((coalQuality * owenPower) * (diskAmount * generatorPower)) / 10;
             block2electicityTxt.text = blockTwoElectircity.ToString();
-            Debug.Log("WORK " + blockTwoElectircity);
             return blockTwoElectircity;
         }
         else if (buildingManager.blockTwo.currentBuildingState == BuildingManager.BuildingState.notwork)
         {
             blockTwoElectircity = 0;
             block2electicityTxt.text = blockTwoElectircity.ToString();
-            Debug.Log("NOT WORK " + blockTwoElectircity);
         }
         else
         {
             blockTwoElectircity = 0;
-            Debug.Log("BUILD OR NOT BUILD " + blockTwoElectircity);
         }
         return blockTwoElectircity;
     }

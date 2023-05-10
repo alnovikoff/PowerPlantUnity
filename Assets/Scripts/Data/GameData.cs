@@ -14,9 +14,14 @@ public class GameData
     //level
     public int block1Level, block2Level, block3Level, block4Level, pumpStationLevel, boatDockLevel, coalStorageLevel, fuelStorageLevel, trainDockLevel, electricalSubstationLevel, waterTreatmentLevel;
 
+    // managers
+    public int block1Manager, block2SManager, block3Manager, block4Manager;
+
     public string startDate, endDate;
 
     public int block1Slider1, block1Slider1_2, block2Slider1, block2Slider1_2, block3Slider1, block3Slider1_2, block4Slider1, block4Slider1_2;
+
+    public bool[] assignedRegions;
 
     public bool[] workPumps;
     public GameData()
@@ -61,7 +66,11 @@ public class GameData
         this.block4Slider1 = new int();
         this.block4Slider1_2 = new int();
 
+        this.assignedRegions = new bool[6];
+
         this.workPumps = new bool[4];
+
+        this.block1Manager = new int();
 
 
         money = 50000;
@@ -113,6 +122,15 @@ public class GameData
         workPumps[0] = true;
         workPumps[1] = false;
         workPumps[2] = false;
-        workPumps[3] = false;        
+        workPumps[3] = false;  
+
+        assignedRegions[0] = false;
+        assignedRegions[1] = false;  
+        assignedRegions[2] = false;  
+        assignedRegions[3] = false;  
+        assignedRegions[4] = false; 
+        assignedRegions[5] = false;
+
+        this.block1Manager = 0;
     }
 }

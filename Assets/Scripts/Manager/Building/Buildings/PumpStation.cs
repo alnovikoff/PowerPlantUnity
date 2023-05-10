@@ -11,7 +11,6 @@ public class PumpStation : AbstractBuilding
 
     public int GetActivePump()
     {
-        Debug.Log(pumpWork.Where(c => c).Count());
         return pumpWork.Where(c => c).Count();
     }
 }

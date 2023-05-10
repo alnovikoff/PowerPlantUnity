@@ -9,7 +9,6 @@ public class WaterConsumption : MonoBehaviour
     {
         if (buildingManager.pumpStation.currentBuildingState == BuildingManager.BuildingState.work)
         {
-            Debug.Log(((pumpPower * buildingManager.pumpStation.GetActivePump()) * buildingManager.pumpStation.pumpAmount[buildingManager.pumpStation.level]) * generatorPower);
             return ((pumpPower * buildingManager.pumpStation.GetActivePump()) * buildingManager.pumpStation.pumpAmount[buildingManager.pumpStation.level]) * generatorPower;
         }
         else if (buildingManager.pumpStation.currentBuildingState == BuildingManager.BuildingState.build)

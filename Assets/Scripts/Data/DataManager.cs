@@ -14,7 +14,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private PlayerLevelManager playerLevelManager;
     [SerializeField] private BuilderManager builderManager;
     [SerializeField] private ControlSlidersManager controlSlidersManager;
-
+    [SerializeField] private TownMapManager townMapManager;
     private void Awake()
     {
         gameData = SaveSystem.Load();
@@ -31,6 +31,8 @@ public class DataManager : MonoBehaviour
         InitializeMoneyValues();
         InitializeLevelValues();
         InitializeManagmentPan();
+        AssignedRegions();
+        LoadManagers();
     }
 
     private void InitializeBuilders()
@@ -114,6 +116,20 @@ public class DataManager : MonoBehaviour
         buildingManager.pumpStation.pumpWork[1] = gameData.workPumps[1];
         buildingManager.pumpStation.pumpWork[2] = gameData.workPumps[2];
         buildingManager.pumpStation.pumpWork[3] = gameData.workPumps[3];
+    }
+
+    public void AssignedRegions()
+    {
+        townMapManager.assignedRegions = new bool[6];
+        for(int i = 0; i < townMapManager.assignedRegions.Length; i++)
+        {
+            townMapManager.assignedRegions[i] = gameData.assignedRegions[i];
+        }
+    }
+
+    public void LoadManagers()
+    {
+        buildingManager.blockOne.managerID = gameData.block1Manager;
     }
 
     private void InitializeLevelValues()

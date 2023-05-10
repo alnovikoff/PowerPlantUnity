@@ -37,7 +37,6 @@ public class BuildTime : MonoBehaviour
     {
         timerStart = DateTime.Now;
         TimeSpan time = new TimeSpan(values.days, values.hours, values.minutes, values.seconds);
-        Debug.Log(values.days + " " + values.hours + " " + values.minutes + " " + values.seconds);
         timerEnd = timerStart.Add(time);
         inProgress = true;
 

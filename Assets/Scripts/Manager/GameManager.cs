@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BuilderManager builderManager;
     [SerializeField] private BuildingManager buildingManager;
     [SerializeField] private FailturesChecker failturesChecker;
+    [SerializeField] public OnTapAction onTapAction;
+    [SerializeField] public HRManagment hrManagment;
+    [SerializeField] private RandomEvents randomEvents;
 
     [Header("Manager UI")]
     [SerializeField] private TMP_Text coalConsumptionTxt;
@@ -42,6 +45,10 @@ public class GameManager : MonoBehaviour
     public Action onChangeLevel;
     public Action onBuilder;
     public Action onFailture;
+    public Action onGameEvent;
+
+    public Action<AbstractBuilding, GameObject> OnBuildingTapAction;
+    public Action<AbstractBuilding> OnHRAction;
 
     public Action<AbstractBuilding> onBuildingCondition;
     private void Awake()
@@ -54,12 +61,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        OnBuildingTapAction += onTapAction.MakeAction;
         onBuilder += UpdateBuilders;
         onChangeElectricity += UpdateElectricityProduction;
         onChangeRequredElectricity += UpdateRequiredElecticity;
         onChangeLevel += LevelUpdate;
         onBuildingCondition += workMode.DisplayCondition;
-        onFailture += failturesChecker.PumpsOff; 
+        onFailture += failturesChecker.PumpsOff;
+        //onGameEvent += randomEvents.OnGameEventPopUp;
         //onChangeElectricity?.Invoke();
         onChangeRequredElectricity?.Invoke();
         onBuilder?.Invoke();
@@ -91,14 +100,16 @@ public class GameManager : MonoBehaviour
 
     public void UpdateRequiredElecticity()
     {
-        currentRequiredElectricity.text = (townMapManager.regonOne.RequiredElectricity() + townMapManager.regonTwo.RequiredElectricity() + townMapManager.regonThree.RequiredElectricity()
-                                        + townMapManager.regonFour.RequiredElectricity() + townMapManager.regonFive.RequiredElectricity() + townMapManager.regonSix.RequiredElectricity()).ToString();
+        currentRequiredElectricity.text = (townMapManager.regonOne.RequiredElectricityToCount(0) + townMapManager.regonTwo.RequiredElectricityToCount(1)+ townMapManager.regonThree.RequiredElectricityToCount(2)
+                                        + townMapManager.regonFour.RequiredElectricityToCount(3) + townMapManager.regonFive.RequiredElectricityToCount(4) + townMapManager.regonSix.RequiredElectricityToCount(5)).ToString();
     }
 
     public void UpdateBuilders()
     {
         currentFreeBuildersTxt.text = builderManager.GetBuidlderAmount() + " / " + builderManager.GetCurrentFreeBuilder();
     }
+
+    
 
     public void LevelUpdate()
     {

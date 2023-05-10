@@ -14,6 +14,7 @@ public class BlockOne : AbstractBuilding
     public int[] disckAmount;
     public int[] eco;
 
+
     public override void OnBuildingEvent()
     {
         base.OnBuildingEvent();
@@ -26,6 +27,13 @@ public class BlockOne : AbstractBuilding
     {
         base.SwitchState(buildingState);
         DataManager.gameData.block1State = (int)currentBuildingState;
+        SaveSystem.Save(DataManager.gameData);
+    }
+
+    public override  void OnManagerSet(int managerId)
+    {
+        base.OnManagerSet(managerId);
+        DataManager.gameData.block1Manager = managerID;
         SaveSystem.Save(DataManager.gameData);
     }
 }

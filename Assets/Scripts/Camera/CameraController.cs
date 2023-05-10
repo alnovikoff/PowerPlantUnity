@@ -43,7 +43,6 @@ public class CameraController : MonoBehaviour
 
             if (Input.GetTouch(0).phase == TouchPhase.Moved)
             {
-                Debug.Log(Delta1);
                 Camera.transform.Translate(Delta1, Space.World);
                 Camera.transform.position = new Vector3(Mathf.Clamp(Camera.transform.position.x, MIN_X, MAX_X), Camera.transform.position.y, Mathf.Clamp(Camera.transform.position.z, MIN_Z, MAX_Z));
             }

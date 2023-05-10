@@ -17,6 +17,7 @@ public abstract class AbstractBuilding : MonoBehaviour
     [SerializeField] public int level;
     [SerializeField] public int condition;
     [SerializeField] public string buildingName;
+    [SerializeField] public int managerID;
     
 
     [Header("Building Requirements")]
@@ -73,10 +74,15 @@ public abstract class AbstractBuilding : MonoBehaviour
 
     private void GiveReward(int index)
     {
-        //GameManager.instance.playerLevelManager.GainExperienceFlatRate(reward[index].xp);
-        //GameManager.instance.playerLevelManager.UpdateUI(reward[index].xp);
+        GameManager.instance.playerLevelManager.GainExperienceFlatRate(reward[index].xp);
+        GameManager.instance.playerLevelManager.UpdateXpUI();
         GameManager.instance.money.AddValue(reward[index].money);
         GameManager.instance.money.AddDonateValue(reward[index].donate);
+    }
+
+    public virtual void OnManagerSet(int managerId)
+    {
+        managerID = managerId;
     }
 }
 

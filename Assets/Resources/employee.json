@@ -1,0 +1,52 @@
+{
+  "candidate": {
+    "1": {
+      "name": "1",
+      "photoUrl": "Sprites/s1",
+      "bio": "I'm an 1"
+    },
+    "2": {
+      "name": "2",
+      "photoUrl": "Sprites/s2",
+      "bio": "I'm an 2"
+    },
+    "3": {
+      "name": "3",
+      "photoUrl": "Sprites/s3",
+      "bio": "I'm an 3"
+    },
+    "4": {
+      "name": "4",
+      "photoUrl": "Sprites/s4",
+      "bio": "I'm an 4"
+    },
+    "5": {
+      "name": "5",
+      "photoUrl": "Sprites/s5",
+      "bio": "I'm a 5"
+    },
+    "6": {
+      "name": "6",
+      "photoUrl": "Sprites/s6",
+      "bio": "I'm an 6"
+    },
+    "7": {
+      "name": "7",
+      "photoUrl": "Sprites/s4",
+      "bio": "I'm an 7"
+    },
+    "8": {
+      "name": "8",
+      "photoUrl": "Sprites/s5",
+      "bio": "I'm a 8"
+    },
+    "9": {
+      "name": "9",
+      "photoUrl": "Sprites/s6",
+      "bio": "I'm an 9"
+    }
+  },
+  "worker": {
+    
+  }
+}

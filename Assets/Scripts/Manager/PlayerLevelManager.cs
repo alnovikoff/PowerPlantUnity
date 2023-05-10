@@ -61,7 +61,7 @@ public class PlayerLevelManager : MonoBehaviour
             frontXpBar.fillAmount = currentXp / nextLevelXp;
         }
     }
-    private void UpdateXpUI()
+    public void UpdateXpUI()
     {
         float xpFraction = currentXp / nextLevelXp;
         float fXP = frontXpBar.fillAmount;
@@ -69,10 +69,10 @@ public class PlayerLevelManager : MonoBehaviour
         if (fXP < xpFraction)
         {
             delayTimer += Time.deltaTime;
-            if (delayTimer > 3)
+            if (delayTimer > 0.25)
             {
                 lerpTimer += Time.deltaTime;
-                float percentComplete = lerpTimer / 5;
+                float percentComplete = lerpTimer / 1;
                 percentComplete = percentComplete * percentComplete;
                 frontXpBar.fillAmount = Mathf.Lerp(fXP, xpFraction, percentComplete);
             }

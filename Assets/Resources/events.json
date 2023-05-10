@@ -1,0 +1,14 @@
+{
+  "1" : {
+    "Name": "Do you want to invest in children playground?",
+    "description": "Do you want to invest in children playground? You could help city to make it better.",
+    "yes" : [-1000, 500, 20],
+    "no" : [0, 500, 10]
+  },
+  "2" : {
+    "Name": "Clean water?",
+    "description": "Threr was an accident that accure pollition pf water, would you like to clean or not?",
+    "yes" : [1000, 500, 20],
+    "no" : [0, 500, 10]
+  }
+}

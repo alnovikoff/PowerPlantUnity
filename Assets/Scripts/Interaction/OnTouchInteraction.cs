@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static HRManagment;
 
 
 public class OnTouchInteraction : MonoBehaviour
 {
     public OnTapAction onTapAction;
     public BuildingManager buildingManager;
+    public HRManagment hRManagment;
+
     void Update()
     {
         if ((Input.touchCount > 0) && Input.GetTouch(0).phase == TouchPhase.Ended)
@@ -23,37 +26,49 @@ public class OnTouchInteraction : MonoBehaviour
                     switch (raycastHit.collider.gameObject.name)
                     {
                         case "Block1":
-                            onTapAction.MakeAction(buildingManager.blockOne, raycastHit.collider.gameObject);
+                            if(!hRManagment.isManager)
+                                GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockOne, raycastHit.collider.gameObject);
+                            else
+                                GameManager.instance.OnHRAction?.Invoke(buildingManager.blockOne);
                             break;
                         case "Block2":
-                            onTapAction.MakeAction(buildingManager.blockTwo, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockTwo, raycastHit.collider.gameObject);
+                            GameManager.instance.OnHRAction?.Invoke(buildingManager.blockTwo);
                             break;
                         case "Block3":
-                            onTapAction.MakeAction(buildingManager.blockThree, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockThree, raycastHit.collider.gameObject);
                             break;
                         case "Block4":
-                            onTapAction.MakeAction(buildingManager.blockFour, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockFour, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.blockFour, raycastHit.collider.gameObject);
                             break;
                         case "PumpStation":
-                            onTapAction.MakeAction(buildingManager.pumpStation, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.pumpStation, raycastHit.collider.gameObject);
+                            // onTapAction.MakeAction(buildingManager.pumpStation, raycastHit.collider.gameObject);
                             break;
                         case "BoatDock":
-                            onTapAction.MakeAction(buildingManager.boatDock, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.boatDock, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.boatDock, raycastHit.collider.gameObject);
                             break;
                         case "CoalStorage":
-                            onTapAction.MakeAction(buildingManager.coalStorage, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.coalStorage, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.coalStorage, raycastHit.collider.gameObject);
                             break;
                         case "FuelStorage":
-                            onTapAction.MakeAction(buildingManager.fuelStorage, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.fuelStorage, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.fuelStorage, raycastHit.collider.gameObject);
                             break;
                         case "TrainDock":
-                            onTapAction.MakeAction(buildingManager.trainDock, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.trainDock, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.trainDock, raycastHit.collider.gameObject);
                             break;
                         case "ElectricalSubstation":
-                            onTapAction.MakeAction(buildingManager.electricalSubstation, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.electricalSubstation, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.electricalSubstation, raycastHit.collider.gameObject);
                             break;
                         case "WaterTreatment":
-                            onTapAction.MakeAction(buildingManager.waterTreatment, raycastHit.collider.gameObject);
+                            GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.waterTreatment, raycastHit.collider.gameObject);
+                            //onTapAction.MakeAction(buildingManager.waterTreatment, raycastHit.collider.gameObject);
                             break;
                         //case "Security":
                         //    onTapAction.BlockTwoPan(raycastHit.collider.gameObject);

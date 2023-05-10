@@ -27,7 +27,7 @@ public class TabGroup : MonoBehaviour
     //public void OnTabEnter(TabBtn btn)
     //{
     //    ResetTabs();
-    //    btn.background.sprite = tabHover;
+    //    btn.background.sprite = tabActive;
     //}
 
     public void OnTabExit(TabBtn btn)
@@ -37,7 +37,14 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabSelected(TabBtn btn)
     {
+        if(selectedTab != null) 
+        {
+            selectedTab.Deselect();
+        }
         selectedTab = btn;
+
+        selectedTab.Select();
+
         ResetTabs();
         btn.background.sprite = tabActive;
         int index = btn.transform.GetSiblingIndex();
