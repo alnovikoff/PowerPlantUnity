@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +17,12 @@ public class HireEmployee : MonoBehaviour
     [SerializeField] private Button hireButton;
     public void EmployeeHiring(AbstractBuilding abstractBuilding)
     {
-        hireEmployeePhoto.sprite = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].employeePhoto;
-        hireEmployeeName.text = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].name;
+        hireEmployeePhoto.sprite = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].employeePhoto;
+        hireEmployeeName.text = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].name;
         if (abstractBuilding.managerID != 0)
         {
-            currentEmployeePhoto.sprite = hRManagment.jsonReader.emplyees.worker[abstractBuilding.managerID].employeePhoto;
-            currentEmployeeName.text = hRManagment.jsonReader.emplyees.worker[abstractBuilding.managerID].name;
+            currentEmployeePhoto.sprite = hRManagment.jsonReader.employee.worker[abstractBuilding.managerID].employeePhoto;
+            currentEmployeeName.text = hRManagment.jsonReader.employee.worker[abstractBuilding.managerID].name;
             //hireEmployeePhoto = hRManagment.jsonReader.emplyees.employee[hRManagment.employeeID].managerPhoto;
         }
 
@@ -31,19 +32,16 @@ public class HireEmployee : MonoBehaviour
             abstractBuilding.OnManagerSet(hRManagment.employeeID);
             //move data from one dictionary to anothrt then save file
             hRManagment.isManager = false;
-            hRManagment.jsonReader.emplyees.worker.Add(hRManagment.employeeID, new Worker
+            hRManagment.jsonReader.employee.worker.Add(hRManagment.employeeID, new Worker
             {
-                name = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].name,
-                photoUrl = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].photoUrl,
-                employeePhoto = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].employeePhoto,
-                bio = hRManagment.jsonReader.emplyees.candidate[hRManagment.employeeID].bio
+                name = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].name,
+                photoUrl = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].photoUrl,
+                employeePhoto = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].employeePhoto,
+                bio = hRManagment.jsonReader.employee.candidate[hRManagment.employeeID].bio
             });
-            hRManagment.jsonReader.emplyees.candidate.Remove(hRManagment.employeeID);
+            hRManagment.jsonReader.employee.candidate.Remove(hRManagment.employeeID);
             
-            hRManagment.jsonReader.SaveToFile();
-            
-            //hRManagment.jsonReader.emplyees.candidate.Remove(hRManagment.employeeID);
-
+            hRManagment.jsonReader.SaveEmployees(hRManagment.jsonReader.employee);
         });
     }
 }

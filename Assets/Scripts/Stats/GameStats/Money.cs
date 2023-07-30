@@ -14,6 +14,12 @@ public class Money : MonoBehaviour
 
     public int timer;
     private Coroutine moneyCounting, donateCounting;
+
+    private void Start()
+    {
+        //StopCoroutine(moneyCounting);
+        //StopCoroutine(donateCounting);
+    }
     public void InitializeMoney()
     {
         moneyTxt.text = money.ToString();
@@ -84,6 +90,8 @@ public class Money : MonoBehaviour
         }
         DataManager.gameData.donate = (int)donate;
         SaveSystem.Save(DataManager.gameData);
+        //StopCoroutine(moneyCounting);
+        //StopCoroutine(donateCounting);
     }
 
     public float GetMoney() { return money; }

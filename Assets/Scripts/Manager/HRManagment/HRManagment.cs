@@ -29,7 +29,7 @@ public class HRManagment : MonoBehaviour
     public void InitializeOnOpen()
     {
         candidateKeys.Clear();
-        candidateKeys = jsonReader.emplyees.candidate.Keys.ToList();
+        candidateKeys = jsonReader.employee.candidate.Keys.ToList();
         DictionaryUtils.Shuffle(candidateKeys);
         int lastKey = 0;
         for (int i = 0; i < 6; i++)
@@ -40,9 +40,9 @@ public class HRManagment : MonoBehaviour
             int id = randomKey;
             hrEmployeesTabs[i].SetActive(true);
             hrEmployeesTabs[i].transform.position = teamplate.transform.position;
-            hrEmployeesTabs[i].transform.GetChild(0).GetComponent<TMP_Text>().text = jsonReader.emplyees.candidate[randomKey].name.ToString();//jsonReader.emplyeeDictionary[i].name.ToString();
-            hrEmployeesTabs[i].transform.GetChild(1).GetComponent<TMP_Text>().text = jsonReader.emplyees.candidate[randomKey].bio.ToString() + " id: " + id;
-            hrEmployeesTabs[i].transform.GetChild(2).GetComponent<Image>().sprite = jsonReader.emplyees.candidate[randomKey].employeePhoto;
+            hrEmployeesTabs[i].transform.GetChild(0).GetComponent<TMP_Text>().text = jsonReader.employee.candidate[randomKey].name.ToString();//jsonReader.emplyeeDictionary[i].name.ToString();
+            hrEmployeesTabs[i].transform.GetChild(1).GetComponent<TMP_Text>().text = jsonReader.employee.candidate[randomKey].bio.ToString() + " id: " + id;
+            hrEmployeesTabs[i].transform.GetChild(2).GetComponent<Image>().sprite = jsonReader.employee.candidate[randomKey].employeePhoto;
             //hrEmployeesTabs[i].transform.GetChild(3).transform.GetChild(0).GetComponent<TMP_Text>().text = hireEmployee.jsonReader.employeeList.employees[i].skill1.ToString();
             //hrEmployeesTabs[i].transform.GetChild(4).transform.GetChild(0).GetComponent<TMP_Text>().text = hireEmployee.jsonReader.employeeList.employees[i].skill2.ToString();
             //hrEmployeesTabs[i].transform.GetChild(5).transform.GetChild(0).GetComponent<TMP_Text>().text = hireEmployee.jsonReader.employeeList.employees[i].skill3.ToString();

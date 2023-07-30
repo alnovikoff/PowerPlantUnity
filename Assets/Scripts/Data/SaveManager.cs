@@ -2,13 +2,14 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.Playables;
+using Newtonsoft.Json;
 
 public class SaveSystem
 {
     private readonly static string encryptionCodeWord = "word";
-    public static void Save(GameData data)
+    public static void Save(GameData gameData)
     {
-        string dataToStore = JsonUtility.ToJson(data, true);
+        string dataToStore = JsonUtility.ToJson(gameData, true);
 
         //dataToStore = EncryptDecrypt(dataToStore);
 
@@ -38,8 +39,8 @@ public class SaveSystem
                 dataToLoad = reader.ReadToEnd();
             }
             //dataToLoad = EncryptDecrypt(dataToLoad);
-            loadedData = JsonUtility.FromJson<GameData>(dataToLoad);
-
+            //loadedData = JsonUtility.FromJson<object>(dataToLoad);
+            loadedData = JsonConvert.DeserializeObject<GameData>(dataToLoad);
             return loadedData;
         }
     }

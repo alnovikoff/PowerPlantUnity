@@ -5,10 +5,6 @@ using static BuildingManager;
 
 public class BlockThree: AbstractBuilding
 {
-    public float[] totalBlockPower;
-    public float[] maxBlockPower;
-    public float[] totalOwenPower;
-    public float[] maxOwenPower;
     public int[] disckAmount;
     public int[] eco;
 
@@ -17,13 +13,20 @@ public class BlockThree: AbstractBuilding
         base.OnBuildingEvent();
         DataManager.gameData.block3Level = level;
         DataManager.gameData.block3State = (int)currentBuildingState;
-        SaveSystem.Save(DataManager.gameData);
+        SaveBuildingData();
     }
 
     public override void SwitchState(BuildingState buildingState)
     {
         base.SwitchState(buildingState);
         DataManager.gameData.block3State = (int)currentBuildingState;
-        SaveSystem.Save(DataManager.gameData);
+        SaveBuildingData();
+    }
+
+    public override void OnManagerSet(int managerId)
+    {
+        base.OnManagerSet(managerId);
+        DataManager.gameData.block3Manager = managerID;
+        SaveBuildingData();
     }
 }

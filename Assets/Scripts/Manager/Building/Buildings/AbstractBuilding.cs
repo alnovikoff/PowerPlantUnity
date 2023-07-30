@@ -15,6 +15,7 @@ public abstract class AbstractBuilding : MonoBehaviour
     [Header("Building Properties")]
     [SerializeField] public BuildingState currentBuildingState;
     [SerializeField] public int level;
+    [SerializeField] public int maxLevel;
     [SerializeField] public int condition;
     [SerializeField] public string buildingName;
     [SerializeField] public int managerID;
@@ -29,7 +30,6 @@ public abstract class AbstractBuilding : MonoBehaviour
     {
         GameObjectInitialization();
     }
-
     public GameObject GetGameObject() 
     {
         return this.gameObject;
@@ -37,16 +37,18 @@ public abstract class AbstractBuilding : MonoBehaviour
 
     public void GameObjectInitialization()
     {
-        if (currentBuildingState == BuildingState.notbuild || currentBuildingState == BuildingState.build)
+        if (currentBuildingState == BuildingState.work || currentBuildingState == BuildingState.notwork)
         {
-            constructionPref.SetActive(true);
-            level1Pref.SetActive(false);
-        }
-        else if (currentBuildingState == BuildingState.work || currentBuildingState == BuildingState.notwork)
-        {
-            constructionPref.SetActive(false);
+            //if (constructionPref != null)
+                //constructionPref.SetActive(false);
             level1Pref.SetActive(true);
         }
+        //else if (currentBuildingState == BuildingState.notbuild || currentBuildingState == BuildingState.build)
+        //{
+        //    if (constructionPref != null)
+        //        constructionPref.SetActive(true);
+        //    level1Pref.SetActive(false);
+        //}
     }
 
     public virtual void OnBuildingEvent()
@@ -57,7 +59,7 @@ public abstract class AbstractBuilding : MonoBehaviour
             case 0:
                 level = 1;
                 GiveReward(0);
-                constructionPref.SetActive(false);
+                //constructionPref.SetActive(false);
                 level1Pref.SetActive(true);
                 break;
             case 1:
@@ -83,6 +85,11 @@ public abstract class AbstractBuilding : MonoBehaviour
     public virtual void OnManagerSet(int managerId)
     {
         managerID = managerId;
+    }
+
+    public void SaveBuildingData()
+    {
+        SaveSystem.Save(DataManager.gameData);
     }
 }
 

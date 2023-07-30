@@ -7,10 +7,6 @@ using static BuildingManager;
 
 public class BlockOne : AbstractBuilding
 {
-    public float[] totalBlockPower;
-    public float[] maxBlockPower;
-    public float[] totalOwenPower;
-    public float[] maxOwenPower;
     public int[] disckAmount;
     public int[] eco;
 
@@ -20,20 +16,20 @@ public class BlockOne : AbstractBuilding
         base.OnBuildingEvent();
         DataManager.gameData.block1Level = level;
         DataManager.gameData.block1State = (int)currentBuildingState;
-        SaveSystem.Save(DataManager.gameData);
+        SaveBuildingData();
     }
 
     public override void SwitchState(BuildingState buildingState)
     {
         base.SwitchState(buildingState);
         DataManager.gameData.block1State = (int)currentBuildingState;
-        SaveSystem.Save(DataManager.gameData);
+        SaveBuildingData();
     }
 
     public override  void OnManagerSet(int managerId)
     {
         base.OnManagerSet(managerId);
         DataManager.gameData.block1Manager = managerID;
-        SaveSystem.Save(DataManager.gameData);
+        SaveBuildingData();
     }
 }

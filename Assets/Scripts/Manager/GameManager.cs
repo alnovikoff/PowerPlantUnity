@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,7 +37,10 @@ public class GameManager : MonoBehaviour
     [Header("Manager UI")]
     [SerializeField] private TMP_Text coalConsumptionTxt;
     [SerializeField] private TMP_Text waterConsumptionTxt;
-    
+
+    [SerializeField] private RectTransform arrow;
+    [SerializeField] private float minArrow;
+    [SerializeField] private float maxArrow;
 
     public static GameManager instance;
 
@@ -77,17 +81,26 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         timeManager.Clock();
+        //UpdateMonometer();
     }
 
+    //TODO monometer
+    public void UpdateMonometer()
+    {
+        if (arrow != null)
+        {
+            arrow.localEulerAngles = new Vector3(0, 0, Mathf.Lerp(minArrow, maxArrow, buildingManager.pumpStation.currentPressure / buildingManager.pumpStation.maxPressure));
+        }
+    }
 
     public void UpdateElectricityProduction()
     {
-        electricityTxt.text = (mainAlgorithm.BlockOneProducedElectricity(23, buildingManager.blockOne.disckAmount[buildingManager.blockOne.level], controlSlidersManager.OnBlock1OwenSlider(), controlSlidersManager.OnBlock1GeneratorSlider()) 
-                            + mainAlgorithm.BlockTwoProducedElectricity(23, buildingManager.blockTwo.disckAmount[buildingManager.blockTwo.level], controlSlidersManager.OnBlock2OwenSlider(), controlSlidersManager.OnBlock2GeneratorSlider())
-                            + mainAlgorithm.BlockThreeProducedElectricity(23, buildingManager.blockThree.disckAmount[buildingManager.blockThree.level], controlSlidersManager.OnBlock3OwenSlider(), controlSlidersManager.OnBlock3GeneratorSlider())
-                            + mainAlgorithm.BlockFourProducedElectricity(23, buildingManager.blockFour.disckAmount[buildingManager.blockFour.level], controlSlidersManager.OnBlock4OwenSlider(), controlSlidersManager.OnBlock4GeneratorSlider())).ToString();
+        electricityTxt.text = (mainAlgorithm.BlockOneProducedElectricity(buildingManager.coalStorage.quality, buildingManager.blockOne.disckAmount[buildingManager.blockOne.level - 1], controlSlidersManager.OnBlock1OwenSlider(), controlSlidersManager.OnBlock1GeneratorSlider()) 
+                            + mainAlgorithm.BlockTwoProducedElectricity(buildingManager.coalStorage.quality, buildingManager.blockTwo.disckAmount[buildingManager.blockTwo.level], controlSlidersManager.OnBlock2OwenSlider(), controlSlidersManager.OnBlock2GeneratorSlider())
+                            + mainAlgorithm.BlockThreeProducedElectricity(buildingManager.coalStorage.quality, buildingManager.blockThree.disckAmount[buildingManager.blockThree.level], controlSlidersManager.OnBlock3OwenSlider(), controlSlidersManager.OnBlock3GeneratorSlider())
+                            + mainAlgorithm.BlockFourProducedElectricity(buildingManager.coalStorage.quality, buildingManager.blockFour.disckAmount[buildingManager.blockFour.level], controlSlidersManager.OnBlock4OwenSlider(), controlSlidersManager.OnBlock4GeneratorSlider())).ToString();
 
-        coalConsumptionTxt.text = (coalConsumption.Owen1CoalConsumption(controlSlidersManager.OnBlock1OwenSlider(), buildingManager.blockOne.eco[buildingManager.blockOne.level]) 
+        coalConsumptionTxt.text = (coalConsumption.Owen1CoalConsumption(controlSlidersManager.OnBlock1OwenSlider(), buildingManager.blockOne.eco[buildingManager.blockOne.level - 1]) 
             + coalConsumption.Owen2CoalConsumption(controlSlidersManager.OnBlock2OwenSlider(), buildingManager.blockTwo.eco[buildingManager.blockTwo.level])
             + coalConsumption.Owen3CoalConsumption(controlSlidersManager.OnBlock3OwenSlider(), buildingManager.blockThree.eco[buildingManager.blockThree.level])
             + coalConsumption.Owen4CoalConsumption(controlSlidersManager.OnBlock4OwenSlider(), buildingManager.blockFour.eco[buildingManager.blockFour.level])).ToString();
@@ -95,7 +108,7 @@ public class GameManager : MonoBehaviour
         waterConsumptionTxt.text = (waterConsumption.WaterConsumptionFunc((controlSlidersManager.OnBlock1GeneratorSlider() 
                                                                             + controlSlidersManager.OnBlock2GeneratorSlider() 
                                                                             + controlSlidersManager.OnBlock3GeneratorSlider() 
-                                                                            + controlSlidersManager.OnBlock4GeneratorSlider()), buildingManager.pumpStation.pumpPower[buildingManager.pumpStation.level]).ToString());
+                                                                            + controlSlidersManager.OnBlock4GeneratorSlider()), buildingManager.pumpStation.pumpPower[buildingManager.pumpStation.level - 1]).ToString());
     }
 
     public void UpdateRequiredElecticity()

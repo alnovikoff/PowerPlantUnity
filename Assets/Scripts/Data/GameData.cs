@@ -7,15 +7,20 @@ using System;
 [System.Serializable]
 public class GameData
 {
-    public int money, donate, level, xp, builderAmount;
+    public bool isFirstRun;
+    public int money, donate, level, builderAmount;
+    public float xp;
     // state
-    public int block1State, block2State, block3State, block4State, pumpStationState, boatDockState, coalStorageState, fuelStorageState, trainDockState, electricalSubstationState, waterTreatmentState;
+    public int block1State, block2State, block3State, block4State, pumpStationState, boatDockState, coalStorageState, fuelStorageState, trainDockState, electricalSubstationState, waterTreatmentState, coolingTowerState, securityState;
 
     //level
-    public int block1Level, block2Level, block3Level, block4Level, pumpStationLevel, boatDockLevel, coalStorageLevel, fuelStorageLevel, trainDockLevel, electricalSubstationLevel, waterTreatmentLevel;
+    public int block1Level, block2Level, block3Level, block4Level, pumpStationLevel, boatDockLevel, coalStorageLevel, fuelStorageLevel, trainDockLevel, electricalSubstationLevel, waterTreatmentLevel, coolingTowerLevel, securityLevel;
+
+    // Condition
+    public int block1Condition, block2Condition, block3Condition, block4Condition, pumpStationCondition, boatDockCondition, coalStorageCondition, fuelStorageCondition, trainDockCondition, electricalSubstationCondition, waterTreatmentCondition, coolingTowerCondition, securityCondition;
 
     // managers
-    public int block1Manager, block2SManager, block3Manager, block4Manager;
+    public int block1Manager, block2Manager, block3Manager, block4Manager, pumpStationManager, boatDockManager, coalStorageManager, fuelStorageManager, trainDockManager, electricalSubstationManager, waterTreatmentManager, coolingTowerManager, securityManager;
 
     public string startDate, endDate;
 
@@ -24,12 +29,24 @@ public class GameData
     public bool[] assignedRegions;
 
     public bool[] workPumps;
+
+    //public string[] delivertyStart;
+    //public string[] delivertyEnd;
+
+    public List<Order> order;
+
+    public int coalStorageQuality;
+    public int fuelStorageQuality;
+    public int coalStorageOccupancy;
+    public int fuelStorageOccupancy;
     public GameData()
     {
+        this.isFirstRun = new bool();
+
         this.money = new int();
         this.donate = new int();
         this.level = new int();
-        this.xp = new int();
+        this.xp = new float();
         this.builderAmount = new int();
 
         this.block1State = new int();
@@ -42,6 +59,8 @@ public class GameData
         this.fuelStorageState = new int();
         this.trainDockState = new int();
         this.waterTreatmentState = new int();
+        this.coolingTowerState = new int();
+        this.securityState = new int();
 
         this.block1Level = new int();
         this.block2Level = new int();
@@ -53,6 +72,22 @@ public class GameData
         this.fuelStorageLevel = new int();
         this.trainDockLevel = new int();
         this.waterTreatmentLevel = new int();
+        this.coolingTowerLevel = new int();
+        this.securityState = new int();
+
+        this.block1Condition = new int();
+        this.block2Condition = new int();
+        this.block3Condition = new int();
+        this.block4Condition = new int();
+        this.pumpStationCondition = new int();
+        this.boatDockCondition = new int();
+        this.coalStorageCondition = new int();
+        this.fuelStorageCondition = new int();
+        this.trainDockCondition = new int();
+        this.waterTreatmentCondition = new int();
+        this.coolingTowerCondition = new int();
+        this.securityCondition = new int();
+        this.electricalSubstationCondition = new int();
 
         this.startDate = new string("");
         this.endDate = new string("");
@@ -72,11 +107,19 @@ public class GameData
 
         this.block1Manager = new int();
 
+        this.coalStorageQuality = new int();
+        this.fuelStorageQuality = new int();
+        this.coalStorageOccupancy = new int();
+        this.fuelStorageOccupancy = new int();
+
+        this.order = new List<Order>();
+
+        isFirstRun = true;
 
         money = 50000;
         donate = 5;
         level = 1;
-        xp = 0;
+        xp = 0.0f;
         builderAmount = 1;
 
         // Buildings state
@@ -86,12 +129,15 @@ public class GameData
         block3State = 0;
         block4State = 0;
         pumpStationState = 3;
-        boatDockState = 0;
+        boatDockState = 3;
         coalStorageState = 3;
         fuelStorageState = 3;
         trainDockState = 3;
-        electricalSubstationState = 0;
+        electricalSubstationState = 3;
         waterTreatmentState = 3;
+        coolingTowerState = 3;
+        securityState = 3;
+
 
         // Building level
         block1Level = 1;
@@ -99,12 +145,29 @@ public class GameData
         block3Level = 0;
         block4Level = 0;
         pumpStationLevel = 1;
-        boatDockLevel = 0;
+        boatDockLevel = 1;
         coalStorageLevel = 1;
         fuelStorageLevel = 1;
         trainDockLevel = 1;
-        electricalSubstationLevel = 0;
+        electricalSubstationLevel = 1;
         waterTreatmentLevel = 1;
+        coolingTowerLevel = 1;
+        securityLevel = 1;
+
+        // Condition
+        this.block1Condition = 100;
+        this.block2Condition = 100;
+        this.block3Condition = 100;
+        this.block4Condition = 100;
+        this.pumpStationCondition = 100;
+        this.boatDockCondition = 100;
+        this.coalStorageCondition = 100;
+        this.fuelStorageCondition = 100;
+        this.trainDockCondition = 100;
+        this.waterTreatmentCondition = 100;
+        this.coolingTowerCondition = 100;
+        this.securityCondition = 100;
+        this.electricalSubstationCondition = 100;
 
         startDate = "";
         endDate = "";
@@ -132,5 +195,11 @@ public class GameData
         assignedRegions[5] = false;
 
         this.block1Manager = 0;
+
+        coalStorageQuality = 0;
+        coalStorageOccupancy = 0;
+        fuelStorageQuality = 0;
+        fuelStorageOccupancy = 0;
+
     }
 }

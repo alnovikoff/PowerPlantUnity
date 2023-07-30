@@ -27,9 +27,10 @@ public class BuildTime : MonoBehaviour
         timerStart = DateTime.Parse(startTime);
         timerEnd = DateTime.Parse(endTime);
 
+        inProgress = true;
         lastTimer = StartCoroutine(Timer());
         lastDisplay= StartCoroutine(DisplayTimer(gameObj));
-        inProgress = true;
+        
 
     }
 

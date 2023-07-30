@@ -102,6 +102,7 @@ public class ControlButtonsManager : MonoBehaviour
         if (!buildingManager.pumpStation.pumpWork[0])
         {
             buildingManager.pumpStation.pumpWork[0] = true;
+            //pressure += 2.5f;
             if (failturesChecker.isPumpOff)
             {
                 failturesChecker.isPumpOff = false;
@@ -111,6 +112,7 @@ public class ControlButtonsManager : MonoBehaviour
         else
         {
             buildingManager.pumpStation.pumpWork[0] = false;
+            //pressure -= 2.5f;
         }
         controlScheme.ChangePumpOneColor();
         GameManager.instance.onFailture?.Invoke();
@@ -124,6 +126,7 @@ public class ControlButtonsManager : MonoBehaviour
         if (!buildingManager.pumpStation.pumpWork[1])
         {
             buildingManager.pumpStation.pumpWork[1] = true;
+            //pressure += 2.5f;
             if (failturesChecker.isPumpOff)
             {
                 failturesChecker.isPumpOff = false;
@@ -133,6 +136,7 @@ public class ControlButtonsManager : MonoBehaviour
         else
         {
             buildingManager.pumpStation.pumpWork[1] = false;
+            //pressure -= 2.5f;
         }
         controlScheme.ChangePumpTwoColor();
         GameManager.instance.onFailture?.Invoke();
@@ -146,6 +150,8 @@ public class ControlButtonsManager : MonoBehaviour
         if (!buildingManager.pumpStation.pumpWork[2])
         {
             buildingManager.pumpStation.pumpWork[2] = true;
+
+            //pressure += 2.5f;
             if (failturesChecker.isPumpOff)
             {
                 failturesChecker.isPumpOff = false;
@@ -155,6 +161,7 @@ public class ControlButtonsManager : MonoBehaviour
         else
         {
             buildingManager.pumpStation.pumpWork[2] = false;
+            //pressure -= 2.5f;
         }
         controlScheme.ChangePumpThreeColor();
         GameManager.instance.onFailture?.Invoke();
@@ -167,15 +174,18 @@ public class ControlButtonsManager : MonoBehaviour
         if (!buildingManager.pumpStation.pumpWork[3])
         {
             buildingManager.pumpStation.pumpWork[3] = true;
+            //pressure += 2.5f;
             if (failturesChecker.isPumpOff)
             {
                 failturesChecker.isPumpOff = false;
                 SetBlocksButtons();
+                
             }
         }
         else
         {
             buildingManager.pumpStation.pumpWork[3] = false;
+            //pressure -= 2.5f;
         }
         controlScheme.ChangePumpFourColor();
         GameManager.instance.onFailture?.Invoke();
@@ -183,7 +193,4 @@ public class ControlButtonsManager : MonoBehaviour
         DataManager.gameData.workPumps[3] = buildingManager.pumpStation.pumpWork[3];
         SaveSystem.Save(DataManager.gameData);
     }
-    
-
-
 }

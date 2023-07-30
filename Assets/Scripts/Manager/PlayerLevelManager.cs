@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,8 +32,18 @@ public class PlayerLevelManager : MonoBehaviour
     public AudioClip levelUpSound;
     private AudioSource source;
     //Timers
-    private float lerpTimer;
-    private float delayTimer;
+    public float lerpTimer;
+    public float delayTimer;
+
+    [SerializeField] private Button p50;
+    [SerializeField] private Button p150;
+    [SerializeField] private Button p200;
+
+    public void addExp(int val)
+    {
+        GameManager.instance.playerLevelManager.GainExperienceFlatRate(val);
+        GameManager.instance.playerLevelManager.UpdateXpUI();
+    }
 
     void Start()
     {
@@ -51,7 +62,8 @@ public class PlayerLevelManager : MonoBehaviour
         {
             if (currentXp >= nextLevelXp)
             {
-                LevelUp();
+                if(frontXpBar.fillAmount == 1)
+                    LevelUp();
             }
         }
         else
@@ -65,20 +77,14 @@ public class PlayerLevelManager : MonoBehaviour
     {
         float xpFraction = currentXp / nextLevelXp;
         float fXP = frontXpBar.fillAmount;
-
+        //lerpTimer = 0;
         if (fXP < xpFraction)
         {
-            delayTimer += Time.deltaTime;
-            if (delayTimer > 0.25)
-            {
-                lerpTimer += Time.deltaTime;
-                float percentComplete = lerpTimer / 1;
-                percentComplete = percentComplete * percentComplete;
-                frontXpBar.fillAmount = Mathf.Lerp(fXP, xpFraction, percentComplete);
-            }
-
+            frontXpBar.fillAmount = Mathf.Lerp(fXP, xpFraction, 5f * Time.deltaTime);
         }
-        XpText.text = currentXp + "/" + nextLevelXp;
+        DataManager.gameData.level = level;
+        DataManager.gameData.xp = currentXp;
+        SaveSystem.Save(DataManager.gameData);
     }
 
     public void GainExperienceFlatRate(float xpGained)
@@ -115,7 +121,6 @@ public class PlayerLevelManager : MonoBehaviour
 
         XpText.text = Mathf.Round(currentXp) + "/" + nextLevelXp;
         levelText.text = level.ToString();
-
     }
 
     private int CalculateNextLevelXp()

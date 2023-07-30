@@ -18,4 +18,21 @@ public class Waypoints : MonoBehaviour
         }
         Gizmos.DrawLine(transform.GetChild(transform.childCount - 1).position, transform.GetChild(0).position);
     }
+
+    public Transform GetNextWaypoint(Transform currentWaypoint)
+    {
+        if(currentWaypoint == null)
+        {
+            return transform.GetChild(0); 
+        }
+        
+        if(currentWaypoint.GetSiblingIndex() < transform.childCount - 1)
+        {
+            return transform.GetChild(currentWaypoint.GetSiblingIndex() + 1);
+        }
+        else
+        {
+            return transform.GetChild(0);
+        }
+    }
 }

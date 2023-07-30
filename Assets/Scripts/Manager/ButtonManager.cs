@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -13,25 +16,40 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private GameObject materialShopPan;
     [SerializeField] private GameObject hrManagmentPan;
     [SerializeField] private GameObject employeeHiretap;
+    [SerializeField] private GameObject researchInstitutePan;
 
+    [SerializeField] private CameraController cameraController;
     [SerializeField] private ControlScheme controlScheme;
     [SerializeField] private HRManagment hRManagment;
+    [SerializeField] private ResourceShopManagment resourceShopManagment;
 
     [SerializeField] private TabGroup emplyeeTab;
     [SerializeField] private TabBtn emplyeeBtn;
+
+    [SerializeField] private GameObject shopHolder;
+    [SerializeField] private ResourceDeliveries resourceDeliveries;
     //[SerializeField] private TabGroup donateTab;
     //[SerializeField] private TabBtn donateBtn;
+
+    [SerializeField] private GameObject UI1not;
+    [SerializeField] private GameObject UI2not;
+    [SerializeField] private GameObject UI3buildMode;
+    [SerializeField] private GameObject grid;
 
 
 
     private void Start()
     {
+        grid.SetActive(false);
         employeeHiretap.SetActive(false);
         shopPan.SetActive(false);
         managmentPan.SetActive(false);
         townPan.SetActive(false);
         materialShopPan.SetActive(false);
         hrManagmentPan.SetActive(false);
+        UI1not.SetActive(true);
+        UI2not.SetActive(true);
+        UI3buildMode.SetActive(false);
     }
     public void OnShopPanButton()
     {
@@ -84,6 +102,10 @@ public class ButtonManager : MonoBehaviour
         if(!materialShopPan.activeSelf)
         {
             materialShopPan.SetActive(true);
+            shopHolder.SetActive(false);
+            if(resourceDeliveries.resourceTime.inProgress)
+                resourceDeliveries.InitializeDeliveryData(resourceDeliveries.order[resourceDeliveries.currentIndex]);
+            //resourceDeliveries.resourceTime.StartTimer(resourceDeliveries.order[resourceDeliveries.currentIndex], resourceDeliveries.order[resourceDeliveries.currentIndex].startTime, resourceDeliveries.order[resourceDeliveries.currentIndex].endTime, resourceDeliveries.fillImg, resourceDeliveries.timeTxt);
         }
     }
 
@@ -122,4 +144,37 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
+    public void ResearchInstituteOpen()
+    {
+        if(!researchInstitutePan.activeSelf)
+        {
+            researchInstitutePan.SetActive(true);
+        }
+    }
+
+    public void ResearchInstituteClose()
+    {
+        if (researchInstitutePan.activeSelf)
+        {
+            researchInstitutePan.SetActive(false);
+        }
+    }
+
+    public void OnBuildMode()
+    {
+        grid.SetActive(true);
+        UI1not.SetActive(false);
+        UI2not.SetActive(false);
+        UI3buildMode.SetActive(true);
+        StartCoroutine(cameraController.OnBuildModeEnter());
+    }
+
+    public void ExitBuildMode()
+    {
+        grid.SetActive(false);
+        StartCoroutine(cameraController.OnBuildModeExit());
+        UI1not.SetActive(true);
+        UI2not.SetActive(true);
+        UI3buildMode.SetActive(false);
+    }
 }

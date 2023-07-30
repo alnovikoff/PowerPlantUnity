@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class TownMapManager : MonoBehaviour
@@ -29,6 +30,7 @@ public class TownMapManager : MonoBehaviour
 
     private void Start()
     {
+        token = 0;
         TownManagerPan.SetActive(false);
         TownMapPan.SetActive(true);
     }

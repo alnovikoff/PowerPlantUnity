@@ -1,55 +1,163 @@
 ﻿using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using System.IO;
+using System.ComponentModel;
+using System.Collections;
 
 public class JsonReader : MonoBehaviour
 {
-    public TextAsset textJson;
     public TextAsset eventsTextJson;
-    public Emplyees emplyees;
+    public Employee employee = null;
     public GameEventsHolder gameEvents;
 
-    void Start()
-    {
-        LoadEmployees();
-        LoadGameEvents();
-    }
+    public string path = null;
+    public string pathGameData;
 
-    public void LoadGameEvents()
-    {
-        gameEvents = JsonConvert.DeserializeObject<GameEventsHolder>(eventsTextJson.ToString());
-    }
+    [SerializeField] Container container;
 
-    public void LoadEmployees()
+    public void Awake()
     {
-        emplyees = JsonConvert.DeserializeObject<Emplyees>(textJson.ToString());
-        //for (int i = 1; i < emplyees.candidate.Count; i++)
-        foreach (KeyValuePair<int, Candidate> entry in emplyees.candidate)
+        if (DataManager.gameData.isFirstRun)
         {
-            entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            ReadFromStreamingAssets();
+            employee = LoadEmployees();
+            foreach (KeyValuePair<int, Candidate> entry in employee.candidate)
+            {
+                entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            }
+            foreach (KeyValuePair<int, Worker> entry in employee.worker)
+            {
+                entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            }
+            DataManager.gameData.isFirstRun = false;
+            SaveSystem.Save(DataManager.gameData);
         }
-        foreach (KeyValuePair<int, Worker> entry in emplyees.worker)
+        else
         {
-            entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            employee = LoadEmployees();
+            foreach (KeyValuePair<int, Candidate> entry in employee.candidate)
+            {
+                entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            }
+            foreach (KeyValuePair<int, Worker> entry in employee.worker)
+            {
+                entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+            }
         }
     }
 
-    public void SaveToFile()
+    void ReadFromStreamingAssets()
     {
+        string json;
+        path = Application.streamingAssetsPath + "/employee.json";
+#if UNITY_EDITOR
+        path = Path.Combine(Application.streamingAssetsPath, "employee.json");
+#endif
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            WWW reader = new WWW(path);
+            while (!reader.isDone) { }
 
-        //string assetPath = Resources.Load("employee").ToString();//AssetDatabase.GetAssetPath(textJson);
-        //string filePath = Application.dataPath + "/" + assetPath.Replace("Assets/", "");
-        string filePath = "MyGame_Data/Resources/employee.json";
-        string json = JsonConvert.SerializeObject(emplyees, Formatting.Indented);
-        // filepath
-        File.WriteAllText(filePath, json);
+            var streamReader = reader.text;
+            employee = JsonConvert.DeserializeObject<Employee>(streamReader);
+        }
+        else
+        {
+            json = File.ReadAllText(path);
+            employee = JsonConvert.DeserializeObject<Employee>(json);
+            Debug.Log("We use editor");
+        }
+
+        //employee = JsonConvert.DeserializeObject<Employee>(result);
+        SaveEmployees(employee);
     }
+
+    public Employee LoadEmployees()
+    {
+        if (!File.Exists(GetPath()))
+        {
+            Employee emptyData = new Employee();
+            SaveEmployees(emptyData);
+            return emptyData;
+        }
+        Employee loadedData = null;
+        string dataToLoad = "";
+        using (FileStream stream = new FileStream(GetPath(), FileMode.Open))
+        {
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                dataToLoad = reader.ReadToEnd();
+            }
+            //dataToLoad = EncryptDecrypt(dataToLoad);
+            //loadedData = JsonUtility.FromJson<Employee>(dataToLoad);
+
+            loadedData = JsonConvert.DeserializeObject<Employee>(dataToLoad);
+            return loadedData;
+        }
+    }
+
+    public void SaveEmployees(Employee empl)
+    {
+        string dataToStore = JsonConvert.SerializeObject(empl); ;
+
+        //dataToStore = EncryptDecrypt(dataToStore);
+
+        using (FileStream stream = new FileStream(GetPath(), FileMode.Create))
+        {
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                writer.Write(dataToStore);
+            }
+        }
+    }
+
+    private static string GetPath()
+    {
+        return Application.persistentDataPath + "/employee.json";
+    }
+
+//    public void SerializeGameData()
+//    {
+//        string json = JsonUtility.ToJson(employees);
+//        File.WriteAllText(pathGameData, json);
+//    }
+//    public void DeserializeQuestions()
+//    {
+//        string json;
+//        path = Application.streamingAssetsPath + "/employee.json";
+//#if UNITY_EDITOR
+//        path = Path.Combine(Application.streamingAssetsPath, "employee.json");
+//#endif
+//        if (Application.platform == RuntimePlatform.Android)
+//        {
+//            WWW reader = new WWW(path);
+//            while (!reader.isDone) { }
+
+//            var streamReader = reader.text;
+//            employees = JsonConvert.DeserializeObject<Employees>(streamReader);
+//        }
+//        else
+//        {
+//            json = File.ReadAllText(path);
+//            employees = JsonConvert.DeserializeObject<Employees>(json);
+//            Debug.Log("We use editor");
+//        }
+
+//        //employees = JsonConvert.DeserializeObject<Employees>(streamReader);
+
+//        //foreach (KeyValuePair<int, Candidate> entry in employees.candidate)
+//        //{
+//        //    entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+//        //}
+//        //foreach (KeyValuePair<int, Worker> entry in employees.worker)
+//        //{
+//        //    entry.Value.employeePhoto = Resources.Load<Sprite>(entry.Value.photoUrl);
+//        //}
+//    }
 }
 
-public class Emplyees
+public class Employee
 {
     public Dictionary<int, Candidate> candidate;
     public Dictionary<int, Worker> worker;

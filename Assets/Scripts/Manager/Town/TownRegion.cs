@@ -29,6 +29,9 @@ public class TownRegion : MonoBehaviour
             return (int)((playerLevelManager.level / 0.5f) * ((impactToElectricity[0] * agriculture) + (impactToElectricity[1] * manufacturing) + (impactToElectricity[2] * publicService) 
                     + (impactToElectricity[3] * transportnAndCommunication) + (impactToElectricity[4] * construction) + (impactToElectricity[5] * other)) / 100);
         }
-        return 0;
+        else
+        {
+            return 0;
+        }
     }
 }

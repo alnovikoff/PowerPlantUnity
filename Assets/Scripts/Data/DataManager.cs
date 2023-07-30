@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 public class DataManager : MonoBehaviour
@@ -15,6 +18,9 @@ public class DataManager : MonoBehaviour
     [SerializeField] private BuilderManager builderManager;
     [SerializeField] private ControlSlidersManager controlSlidersManager;
     [SerializeField] private TownMapManager townMapManager;
+    [SerializeField] private ResourceTime resourceTime;
+    [SerializeField] private ResourceDeliveries resourceDeliveries;
+
     private void Awake()
     {
         gameData = SaveSystem.Load();
@@ -25,6 +31,8 @@ public class DataManager : MonoBehaviour
         InitializeBuilders();
         LoadBuildingState();
         LoadBuildingLevel();
+        StorageLoad();
+        LoadBuildingCondition();
         InitializeBuildingUI();
         InitializePumps();
         controlScheme.InitializeControlScheme();
@@ -33,6 +41,7 @@ public class DataManager : MonoBehaviour
         InitializeManagmentPan();
         AssignedRegions();
         LoadManagers();
+        InitializeDeliviries();
     }
 
     private void InitializeBuilders()
@@ -54,6 +63,8 @@ public class DataManager : MonoBehaviour
         buildingManager.trainDock.currentBuildingState = (BuildingManager.BuildingState)gameData.trainDockState;
         buildingManager.electricalSubstation.currentBuildingState = (BuildingManager.BuildingState)gameData.electricalSubstationState;
         buildingManager.waterTreatment.currentBuildingState = (BuildingManager.BuildingState)gameData.waterTreatmentState;
+        buildingManager.coolingTower.currentBuildingState = (BuildingManager.BuildingState)gameData.coolingTowerState;
+        buildingManager.security.currentBuildingState = (BuildingManager.BuildingState)gameData.securityState;
     }
 
     private void LoadBuildingLevel()
@@ -69,6 +80,25 @@ public class DataManager : MonoBehaviour
         buildingManager.trainDock.level = gameData.trainDockLevel;
         buildingManager.electricalSubstation.level = gameData.electricalSubstationLevel;
         buildingManager.waterTreatment.level = gameData.waterTreatmentLevel;
+        buildingManager.coolingTower.level = gameData.coolingTowerLevel;
+        buildingManager.security.level = gameData.securityLevel;
+    }
+
+    private void LoadBuildingCondition()
+    {
+        buildingManager.blockOne.condition = gameData.block1Condition;
+        buildingManager.blockTwo.condition = gameData.block2Condition;
+        buildingManager.blockThree.condition = gameData.block3Condition;
+        buildingManager.blockFour.condition = gameData.block4Condition;
+        buildingManager.pumpStation.condition = gameData.pumpStationCondition;
+        buildingManager.boatDock.condition = gameData.boatDockCondition;
+        buildingManager.coalStorage.condition = gameData.coalStorageCondition;
+        buildingManager.fuelStorage.condition = gameData.fuelStorageCondition;
+        buildingManager.trainDock.condition = gameData.trainDockCondition;
+        buildingManager.electricalSubstation.condition = gameData.electricalSubstationCondition;
+        buildingManager.waterTreatment.condition = gameData.waterTreatmentCondition;
+        buildingManager.coolingTower.condition = gameData.coolingTowerCondition;
+        buildingManager.security.condition = gameData.securityCondition;
     }
 
     private void InitializeBuildingUI()
@@ -89,6 +119,18 @@ public class DataManager : MonoBehaviour
             builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
         }
         
+    }
+
+    private void InitializeDeliviries()
+    {
+        if (gameData.order.Count > 1)
+        {
+            for (int i = 0; i < gameData.order.Count; i++)
+            {
+                //if (gameData.order[i].amount > 0)
+                    resourceDeliveries.order.Add(gameData.order[i]);
+            }
+        }
     }
 
     private void InitializeMoneyValues()
@@ -130,6 +172,17 @@ public class DataManager : MonoBehaviour
     public void LoadManagers()
     {
         buildingManager.blockOne.managerID = gameData.block1Manager;
+        buildingManager.blockTwo.managerID = gameData.block2Manager;
+        buildingManager.blockThree.managerID = gameData.block3Manager;
+        buildingManager.blockFour.managerID = gameData.block4Manager;
+        buildingManager.pumpStation.managerID = gameData.pumpStationManager;
+        buildingManager.boatDock.managerID = gameData.boatDockManager;
+        buildingManager.coalStorage.managerID = gameData.coalStorageManager;
+        buildingManager.trainDock.managerID = gameData.trainDockManager;
+        buildingManager.electricalSubstation.managerID = gameData.electricalSubstationManager;
+        buildingManager.waterTreatment.managerID = gameData.waterTreatmentManager;
+        buildingManager.coolingTower.managerID = gameData.coolingTowerManager;
+        buildingManager.security.managerID = gameData.securityManager;
     }
 
     private void InitializeLevelValues()
@@ -137,5 +190,13 @@ public class DataManager : MonoBehaviour
         //playerLevelManager.level = gameData.level;
         //playerLevelManager.currentXp = gameData.xp;
         //playerLevelManager.InitializeLevel();
+    }
+
+    private void StorageLoad()
+    {
+        buildingManager.coalStorage.quality = gameData.coalStorageQuality;
+        buildingManager.coalStorage.occupancy = gameData.coalStorageOccupancy;
+        buildingManager.fuelStorage.quality = gameData.fuelStorageQuality;
+        buildingManager.fuelStorage.occupancy = gameData.fuelStorageOccupancy;
     }
 }
