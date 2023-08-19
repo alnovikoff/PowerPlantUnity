@@ -22,6 +22,7 @@ public class ButtonManager : MonoBehaviour
     [SerializeField] private ControlScheme controlScheme;
     [SerializeField] private HRManagment hRManagment;
     [SerializeField] private ResourceShopManagment resourceShopManagment;
+    [SerializeField] private GridPlacement gridPlacement;
 
     [SerializeField] private TabGroup emplyeeTab;
     [SerializeField] private TabBtn emplyeeBtn;
@@ -167,6 +168,7 @@ public class ButtonManager : MonoBehaviour
         UI2not.SetActive(false);
         UI3buildMode.SetActive(true);
         StartCoroutine(cameraController.OnBuildModeEnter());
+        gridPlacement.isBuildMode = true;
     }
 
     public void ExitBuildMode()
@@ -176,5 +178,7 @@ public class ButtonManager : MonoBehaviour
         UI1not.SetActive(true);
         UI2not.SetActive(true);
         UI3buildMode.SetActive(false);
+        gridPlacement.StopPlacement();
+        gridPlacement.isBuildMode = false;
     }
 }

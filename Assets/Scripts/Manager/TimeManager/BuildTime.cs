@@ -29,8 +29,8 @@ public class BuildTime : MonoBehaviour
 
         inProgress = true;
         lastTimer = StartCoroutine(Timer());
-        lastDisplay= StartCoroutine(DisplayTimer(gameObj));
-        
+        lastDisplay = StartCoroutine(DisplayTimer(gameObj));
+
 
     }
 
@@ -60,9 +60,12 @@ public class BuildTime : MonoBehaviour
 
     public IEnumerator DisplayTimer(GameObject gameObj)
     {
-        timelineBar.SetActive(true);
-        timelineBar.transform.parent = gameObj.transform;
-        timelineBar.transform.localPosition = new Vector3(0, 4, 0);
+        //timelineBar.SetActive(true);
+        //timelineBar.transform.parent = gameObj.transform;
+        //timelineBar.transform.localPosition = new Vector3(0, 4, 0);
+        GameObject timeBar = Instantiate(timelineBar);
+        timeBar.transform.parent = gameObj.transform;
+        timeBar.transform.localPosition = new Vector3(0, 4, 0);
 
         DateTime start = DateTime.Now;
         timeLeft = timerEnd - start;
@@ -70,10 +73,10 @@ public class BuildTime : MonoBehaviour
         double totalSeconds = (timerEnd - timerStart).TotalSeconds;
         string text;
 
-        txt = timelineBar.transform.GetChild(0).GetComponent<TMP_Text>();
-        img = timelineBar.transform.GetChild(2).GetComponent<Image>();
+        txt = timeBar.transform.GetChild(0).GetComponent<TMP_Text>();
+        img = timeBar.transform.GetChild(2).GetComponent<Image>();
 
-        while (timelineBar.activeSelf)
+        while (timeBar.activeSelf)
         {
             text = "";
             img.fillAmount = 1 - Convert.ToSingle((timerEnd - DateTime.Now).TotalSeconds / totalSeconds);
@@ -112,14 +115,14 @@ public class BuildTime : MonoBehaviour
                 else
                 {
                     onBuildingUpdated.OnBuildingUpdate(gameObj);
-                    timelineBar.SetActive(false);
+                    timeBar.SetActive(false);
                     break;
                 }
             }
             else
             {
                 onBuildingUpdated.OnBuildingUpdate(gameObj);
-                timelineBar.SetActive(false);
+                timeBar.SetActive(false);
                 inProgress = false;
                 break;
             }

@@ -118,7 +118,57 @@ public class DataManager : MonoBehaviour
             buildTime.OnGameStart(buildingManager.blockThree.GetGameObject(), gameData.startDate, gameData.endDate);
             builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
         }
-        
+        if (buildingManager.blockFour.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.blockFour.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.boatDock.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.boatDock.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.coalStorage.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.coalStorage.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.coolingTower.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.coolingTower.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.electricalSubstation.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.electricalSubstation.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        if (buildingManager.fuelStorage.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.fuelStorage.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.pumpStation.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.pumpStation.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.security.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.security.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.trainDock.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.trainDock.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+        else if (buildingManager.waterTreatment.currentBuildingState == BuildingManager.BuildingState.build)
+        {
+            buildTime.OnGameStart(buildingManager.waterTreatment.GetGameObject(), gameData.startDate, gameData.endDate);
+            builderManager.SetcurrentFreeBuilder(builderManager.GetCurrentFreeBuilder() - 1);
+        }
+
     }
 
     private void InitializeDeliviries()

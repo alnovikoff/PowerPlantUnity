@@ -9,6 +9,7 @@ public class GridPlacement : MonoBehaviour
 {
     public Action OnTap, OnExit;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private OnTouchInteraction onTouchInteraction;
 
     [SerializeField] private ObjectsDB database;
     private int selectedIndex = -1;
@@ -16,27 +17,28 @@ public class GridPlacement : MonoBehaviour
     private GameObject gridVisualization;
     [SerializeField] private Grid grid;
 
+    public bool isBuildMode = true;
+
     private void Start()
     {
+        isBuildMode = false;
         StopPlacement();
     }
 
     private void Update()
     {
-        if (Input.touchCount > 0)
+        if (isBuildMode)
         {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                Debug.Log("TOUCH DETECTED");
-                OnTap?.Invoke();
+                Touch touch = Input.GetTouch(0);
 
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Debug.Log("TOUCH DETECTED");
+                    OnTap?.Invoke();
+                }
             }
-            //if (touch.phase == TouchPhase.Ended)
-            //{
-            //    OnExit?.Invoke();
-            //}
         }
     }
 
@@ -49,7 +51,7 @@ public class GridPlacement : MonoBehaviour
     public void StartPlacement(int id)
     {
         selectedIndex = database.objectsData.FindIndex(data => data.ID == id);
-        if(selectedIndex < 0)
+        if (selectedIndex < 0)
         {
             Debug.Log("No id found");
             return;
@@ -60,17 +62,20 @@ public class GridPlacement : MonoBehaviour
 
     private void PlacementStructure()
     {
-        Debug.Log("Start touch");
-        if (cameraController.IsPointerOverUI())
+        if (!onTouchInteraction.IsPointerOverUIObject() && selectedIndex >= 0)
         {
-            return;
+            Debug.Log("Start touch");
+            if (cameraController.IsPointerOverUI())
+            {
+                return;
+            }
+            Vector3 touchPosition = Vector3.zero;
+            touchPosition = PlanePositionDelta();
+            Vector3Int gridPos = grid.WorldToCell(touchPosition);
+            GameObject newObj = Instantiate(database.objectsData[selectedIndex].prefab);
+            newObj.transform.position = gridPos;
+            Debug.Log(touchPosition + " " + gridPos);
         }
-        Vector3 touchPosition = Vector3.zero;
-        touchPosition = PlanePositionDelta();
-        Vector3Int gridPos = grid.WorldToCell(touchPosition);
-        GameObject newObj = Instantiate(database.objectsData[selectedIndex].prefab);
-        newObj.transform.position = gridPos;
-        Debug.Log(touchPosition + " " + gridPos);
     }
 
     protected Vector3 PlanePositionDelta()
@@ -94,10 +99,10 @@ public class GridPlacement : MonoBehaviour
         return Vector3.zero;
     }
 
-    private void StopPlacement()
+    public void StopPlacement()
     {
         selectedIndex = -1;
-        OnTap -= PlacementStructure; 
+        OnTap -= PlacementStructure;
         OnExit -= StopPlacement;
     }
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();

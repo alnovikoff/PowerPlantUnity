@@ -16,7 +16,7 @@ public class OnTouchInteraction : MonoBehaviour
     {
         if ((Input.touchCount > 0) && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            if(!EventSystem.current.IsPointerOverGameObject())
+            if (!IsPointerOverUIObject())
             {
                 Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
                 RaycastHit raycastHit;
@@ -25,12 +25,12 @@ public class OnTouchInteraction : MonoBehaviour
                     switch (raycastHit.collider.gameObject.name)
                     {
                         case "Block1":
-                            if(!hRManagment.isManager)
+                            if (!hRManagment.isManager)
                                 GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockOne, raycastHit.collider.gameObject);
                             GameManager.instance.OnHRAction?.Invoke(buildingManager.blockOne);
                             break;
                         case "Block2":
-                            if(!hRManagment.isManager)
+                            if (!hRManagment.isManager)
                                 GameManager.instance.OnBuildingTapAction?.Invoke(buildingManager.blockTwo, raycastHit.collider.gameObject);
                             GameManager.instance.OnHRAction?.Invoke(buildingManager.blockTwo);
                             break;
@@ -93,5 +93,14 @@ public class OnTouchInteraction : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

@@ -881,8 +881,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraController: {fileID: 1406149861}
+  onTouchInteraction: {fileID: 0}
   database: {fileID: 11400000, guid: ddd47ae0fb78e5b4289b79acd3732440, type: 2}
   grid: {fileID: 1539646261}
+  isBuildMode: 1
 --- !u!4 &28727218
 Transform:
   m_ObjectHideFlags: 0
@@ -40097,6 +40099,7 @@ MonoBehaviour:
   controlScheme: {fileID: 1141569562}
   hRManagment: {fileID: 1296233747}
   resourceShopManagment: {fileID: 1915119291}
+  gridPlacement: {fileID: 28727217}
   emplyeeTab: {fileID: 359998092}
   emplyeeBtn: {fileID: 523820754}
   shopHolder: {fileID: 303863755}
@@ -55394,7 +55397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.094000004, y: 0.88600004}
   m_AnchorMax: {x: 0.209, y: 0.92700005}
-  m_AnchoredPosition: {x: 0.7390137, y: -0.27148438}
+  m_AnchoredPosition: {x: 0.7392578, y: -0.27148438}
   m_SizeDelta: {x: -0.676, y: 0.54292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1957624237
@@ -56352,7 +56355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07247179, y: 0.88600004}
   m_AnchorMax: {x: 0.094000004, y: 0.92700005}
-  m_AnchoredPosition: {x: 0.11987305, y: 0.0048828125}
+  m_AnchoredPosition: {x: 0.119628906, y: 0.0048828125}
   m_SizeDelta: {x: -0.401, y: 0.0097466}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1988183938
@@ -60982,7 +60985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.015000001, y: 0.18300001}
   m_AnchorMax: {x: 0.08547917, y: 0.726}
-  m_AnchoredPosition: {x: 0.14282227, y: -273.28}
+  m_AnchoredPosition: {x: 0.1430664, y: -273.28003}
   m_SizeDelta: {x: 0.2856, y: -253.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2133108720
