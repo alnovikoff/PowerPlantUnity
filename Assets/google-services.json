@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "firebase_url": "null",
+    "project_number": "258367568261",
+    "project_id": "power-station-manager",
+    "storage_bucket": "power-station-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258367568261:android:37957e8d53f7093af32cec",
+        "android_client_info": {
+          "package_name": "com.northereg.powerstationmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258367568261-mg0fmcgd6vhtg4l45s0ifn1ivcb5uaij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7LYSAlIEuM3vhCqXXrjOuinEHPxl5-ZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258367568261-a12ds0f1g0ml5n0b4jcgipvikianm94a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
